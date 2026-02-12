@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: zmkfirmware/build:latest
+
     strategy:
       fail-fast: false
       matrix:
@@ -17,89 +19,62 @@ jobs:
           # 基础键盘固件
           - board: nice_nano_v2
             shield: charybdis_left
-            cmake_args: ""
           - board: nice_nano_v2
             shield: charybdis_right
-            cmake_args: ""
           - board: nice_nano_v2
             shield: settings_reset
-            cmake_args: ""
           # OLED Dongle
           - board: nice_nano_v2
-            shield: charybdis_left
-            cmake_args: "-DCONFIG_ZMK_STUDIO=y"
-          - board: nice_nano_v2
-            shield: charybdis_right
-            cmake_args: "-DCONFIG_ZMK_STUDIO=y"
-          - board: nice_nano_v2
             shield: dongle_nice_32
-            cmake_args: "-DCONFIG_ZMK_STUDIO=y"
           - board: nice_nano_v2
             shield: dongle_nice_64
-            cmake_args: "-DCONFIG_ZMK_STUDIO=y"
           # Prospector
           - board: xiao_ble
             shield: dongle_prospector prospector_adapter
-            cmake_args: "-DCONFIG_ZMK_STUDIO=y"
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
+      - name: Initialize workspace
         run: |
-          pip install west
-          west init -l config || true
-          west update || true
+          west init -l config
+          west update
 
-      - name: Build Firmware
+      - name: Build ${{ matrix.shield }} for ${{ matrix.board }}
         run: |
-          west build --board ${{ matrix.board }} --shield '${{ matrix.shield }}' --pristine -- -DCONFIG_ZMK_STUDIO=y ${{ matrix.cmake_args }}
+          west build --board ${{ matrix.board }} --shield '${{ matrix.shield }}' --pristine
 
-      - name: Copy firmware artifacts
-        run: |
-          mkdir -p firmware
-          cp build/zephyr/zmk.uf2 firmware/
-
-      - name: Upload firmware artifact
+      - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
           name: zmk-${{ matrix.shield }}-${{ matrix.board }}
-          path: firmware/zmk.uf2
+          path: build/zephyr/zmk.uf2
 
   release:
     needs: build
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    name: Package Release
 
     steps:
-      - name: Download all artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           path: firmware
           merge-multiple: true
 
-      - name: Create firmware bundle
+      - name: Create release bundle
         run: |
           cd firmware
           ls -la
           cd ..
           zip -r firmware.zip firmware
 
-      - name: Create Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: firmware.zip
           name: ZMK Firmware ${{ github.sha }}
-          body: |
-            Auto-generated firmware build
-          draft: false
-          prerelease: false
+          body: 'Auto-generated firmware build'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
