@@ -1,0 +1,18 @@
+# ZMK build artifacts
+build/
+*.uf2
+*.hex
+*.bin
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# West workspace
+.west/
