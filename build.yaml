@@ -1,0 +1,49 @@
+#
+# Copyright (c) 2020 Pete Johanson
+#
+# SPDX-License-Identifier: MIT
+#
+---
+include:
+  # ========== 基础键盘固件 ==========
+  - board: nice_nano_v2
+    shield: charybdis_left
+  - board: nice_nano_v2
+    shield: charybdis_right
+  - board: settings_reset
+
+  # ========== Dongle 模式 - Nice!Nano OLED 显示屏 ==========
+  # SSD1306 128x32 OLED (0.91寸)
+  - board: nice_nano_v2
+    shield: charybdis_left
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+  - board: nice_nano_v2
+    shield: charybdis_right
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+  - board: nice_nano_v2
+    shield: dongle_nice_32
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+
+  # SSD1306 128x64 OLED (0.96寸或1.69寸 - 1.69寸通常使用此分辨率)
+  - board: nice_nano_v2
+    shield: charybdis_left
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+  - board: nice_nano_v2
+    shield: charybdis_right
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+  - board: nice_nano_v2
+    shield: dongle_nice_64
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+
+  # ========== Dongle 模式 - Prospector 显示屏 ==========
+  # Prospector Dongle (Seeeduino XIAO BLE)
+  - board: xiao_ble
+    shield: dongle_prospector prospector_adapter
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
