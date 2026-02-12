@@ -1,0 +1,4 @@
+# Zephyr module marker - enables discovering boards/shields/
+build:
+  settings:
+    root: config
