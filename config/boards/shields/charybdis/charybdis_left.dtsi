@@ -10,6 +10,6 @@
 // I2C for OLED on nice!nano
 &pro_micro_i2c {
 	status = "okay";
-	sda-pin = <30>;    // P0.30
-	scl-pin = <31>;    // P0.31
+	sda-pin = <4>;    // P0.04
+	scl-pin = <5>;    // P0.05
 };
