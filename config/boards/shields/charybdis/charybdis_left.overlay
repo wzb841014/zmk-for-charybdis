@@ -10,24 +10,53 @@
         zephyr,display = &gc9a01a;                                                                                   
     };                                                                                                               
 };                                                                                                                 
-// SPI 控制器                                                                                                    
-    &spi1 {                                                                                                          
-        status = "okay";                                                                                             
-        pinctrl-0 = <&spi1_default>;                                                                                 
-        pinctrl-1 = <&spi1_sleep>;                                                                                   
-        pinctrl-names = "default", "sleep";                                                                          
-                                                                                                                        
-        gc9a01a: gc9a01a@0 {                                                                                         
-            compatible = "gc9a01a";                                                                                  
-            reg = <0>;                                                                                               
-            spi-max-frequency = <15000000>;                                                                          
-            spi-cpol;                                                                                                
-            spi-cpha;                                                                                                
-            dc-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;                                                                 
-            rst-gpios = <&gpio0 21 GPIO_ACTIVE_HIGH>;                                                                
-            status = "okay";                                                                                         
-    };                                                                                                           
-};                                                                                                               
+/ {
+    /* ========== SPI 引脚配置 (GC9A01 + 其他 SPI 设备) ========== */
+    spi0_default: spi0_default {
+        sck {
+            nrf-pinctrl-single = <NRF_PSEL(SPI_SCK, 0, 17)>;  /* SCK: P0.17 */
+        };
+        mosi {
+            nrf-pinctrl-single = <NRF_PSEL(SPI_MOSI, 0, 15)>; /* MOSI: P0.15 */
+        };
+        miso {
+            nrf-pinctrl-single = <NRF_PSEL(SPI_MISO, 0, 13)>; /* MISO: P0.13 (GC9A01 可不接) */
+        };
+    };
+
+    /* ========== GC9A01 显示屏配置 ========== */
+    gc9a01: gc9a01 {
+        compatible = "sitronix,gc9a01";
+        label = "GC9A01";
+        
+        /* SPI 总线引用 */
+        spi-dev = <&spi0>;
+        
+        /* 控制引脚 - 注意 GPIO 标志必须加括号 () */
+        reset-gpios = <&gpio0 22 (GPIO_ACTIVE_LOW)>;  /* RST 引脚 */
+        dc-gpios = <&gpio0 23 (GPIO_ACTIVE_HIGH)>;    /* DC 引脚 */
+        
+        /* 片选引脚 - 也需括号 */
+        cs-gpios = <&gpio0 20 (GPIO_ACTIVE_LOW)>;     /* CS 引脚 */
+        
+        /* 屏幕参数 */
+        width = <240>;
+        height = <240>;
+        rotation = <0>;  /* 0/90/180/270 旋转角度 */
+        x-offset = <0>;
+        y-offset = <0>;
+        
+        /* 可选：背光控制 */
+        /* backlight-gpios = <&gpio0 24 (GPIO_ACTIVE_HIGH)>; */
+    };
+};
+
+/* ========== SPI0 节点启用 ========== */
+&spi0 {
+    status = "okay";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-names = "default";
+};                                                                                                             
    
 
 // {
