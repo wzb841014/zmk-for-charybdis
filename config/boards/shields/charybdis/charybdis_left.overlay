@@ -7,33 +7,33 @@
 #include "charybdis_left.dtsi"
 
 
-/ {
-	chosen {
-		zephyr,display = &oled;
-	};
-};
+// {
+//	chosen {
+//		zephyr,display = &oled;
+//	};
+//};
 
 // I2C for OLED on nice!nano
-&pro_micro_i2c {
-    status = "okay";
-	oled: ssd1306@3c {
-		compatible = "solomon,ssd1306fb";
-		reg = <0x3c>;
-		width = <128>;
-		height = <64>;
-		segment-offset = <0>;
-		page-offset = <0>;
-		display-offset = <0>;
-		multiplex-ratio = <63>;
-		prechargep = <0x22>;
-		// vertical mirror
-		com-invdir;
-		// horizontal mirror
-		segment-remap;
-		// inversion-on;
-        label = "oled";
-	};
-};
+//&pro_micro_i2c {
+//    status = "okay";
+//	oled: ssd1306@3c {
+//		compatible = "solomon,ssd1306fb";
+//		reg = <0x3c>;
+//		width = <128>;
+//		height = <64>;
+//		segment-offset = <0>;
+//		page-offset = <0>;
+//		display-offset = <0>;
+//		multiplex-ratio = <63>;
+//		prechargep = <0x22>;
+//		// vertical mirror
+//		com-invdir;
+//		// horizontal mirror
+//		segment-remap;
+//		// inversion-on;
+//        label = "oled";
+//	};
+//};
 
 &kscan0 {
 	col-gpios
