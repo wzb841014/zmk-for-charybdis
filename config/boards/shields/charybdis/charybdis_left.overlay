@@ -5,7 +5,30 @@
  */
 
 #include "charybdis_left.dtsi"
-
+/ {                                                                                                                  
+    chosen {                                                                                                         
+        zephyr,display = &gc9a01a;                                                                                   
+    };                                                                                                               
+};                                                                                                                 
+// SPI 控制器                                                                                                    
+    &spi1 {                                                                                                          
+        status = "okay";                                                                                             
+        pinctrl-0 = <&spi1_default>;                                                                                 
+        pinctrl-1 = <&spi1_sleep>;                                                                                   
+        pinctrl-names = "default", "sleep";                                                                          
+                                                                                                                        
+        gc9a01a: gc9a01a@0 {                                                                                         
+            compatible = "gc9a01a";                                                                                  
+            reg = <0>;                                                                                               
+            spi-max-frequency = <15000000>;                                                                          
+            spi-cpol;                                                                                                
+            spi-cpha;                                                                                                
+            dc-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;                                                                 
+            rst-gpios = <&gpio0 21 GPIO_ACTIVE_HIGH>;                                                                
+            status = "okay";                                                                                         
+    };                                                                                                           
+};                                                                                                               
+   
 
 // {
 //	chosen {
