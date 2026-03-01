@@ -12,7 +12,7 @@
     chosen {                                                                                                         
         zephyr,display = &gc9a01a;                                                                                   
     };
-
+};
 &pinctrl {                                                                                                           
     spi1_default: spi1_default {                                                                                     
         group1 {                                                                                                     
