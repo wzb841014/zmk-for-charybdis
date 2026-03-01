@@ -3,7 +3,7 @@ manifest:
     - name: zmkfirmware
       url-base: https://github.com/DoctorWangWang
     - name: gc9a01a_zephyr_driver                                                                                    
-      url-base: https://github.com/amrithvenkat/gc9a01a_zephyr_driver        
+      url-base: https://github.com/amrithvenkat       
   projects:
     - name: zmk
       remote: zmkfirmware
