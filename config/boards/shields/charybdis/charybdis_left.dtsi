@@ -1,4 +1,5 @@
 #include "charybdis.dtsi"
+#include <zephyr/drivers/display.h>
 / {
 	kscan0: kscan {
 		compatible = "zmk,kscan-gpio-matrix";
@@ -8,8 +9,34 @@
 };
 
 // I2C for OLED on nice!nano
-&pro_micro_i2c {
-	status = "okay";
-	sda-pin = <4>;    // P0.04
-	scl-pin = <5>;    // P0.05
-};
+//&pro_micro_i2c {
+//	status = "okay";
+//	sda-pin = <4>;    // P0.04
+//	scl-pin = <5>;    // P0.05
+//};
+// 1. 定义 SPI 引脚                                                                                                  
+&pinctrl {                                                                                                           
+    spi1_default: spi1_default {                                                                                     
+        group1 {                                                                                                     
+            psels = <NRF_PSEL(SPI_SCK, 0, 17)>,   // SCK                                                             
+                    <NRF_PSEL(SPI_MOSI, 0, 20)>,  // MOSI                                                            
+                    <NRF_PSEL(SPI_MISO, 0, 22)>; // MISO（可选）                                                     
+        };                                                                                                           
+    };                                                                                                               
+};      
+// 2. SPI 控制器引用 pinctrl                                                                                         
+&spi1 {                                                                                                              
+    status = "okay";                                                                                                 
+    pinctrl-0 = <&spi1_default>;                                                                                     
+    pinctrl-1 = <&spi1_sleep>;                                                                                       
+    pinctrl-names = "default", "sleep";                                                                              
+                                                                                                                        
+    gc9a01a: gc9a01a@0 {                                                                                             
+        compatible = "gc9a01a";                                                                                      
+        reg = <0>;                                                                                                   
+        spi-max-frequency = <15000000>;                                                                              
+        dc-gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;                                                                     
+        rst-gpios = <&gpio0 21 GPIO_ACTIVE_HIGH>;                                                                    
+        status = "okay";                                                                                             
+    };                                                                                                               
+}; 
