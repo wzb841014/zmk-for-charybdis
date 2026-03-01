@@ -11,7 +11,7 @@
             nrf-pinctrl-single = <NRF_PSEL(SPI_MOSI, 0, 15)>;
         };
         miso {
-            nrf-pinctrl-single = <NRF_PSEL(SPI_MISO, 0, 13)>;
+            nrf-pinctrl-single = <NRF_PSEL(SPI_MISO, 0, 15)>;
         };
     };
 
