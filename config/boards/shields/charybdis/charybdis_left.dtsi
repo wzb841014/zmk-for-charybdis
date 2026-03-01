@@ -9,29 +9,7 @@
     };                                                                                                               
 };
 
-/ {                                                                                                                  
-    chosen {                                                                                                         
-        zephyr,display = &gc9a01a;                                                                                   
-    };
-};
-                                                                                                                   
-                                                                                                                        
-&spi1 {                                                                                                              
-    status = "okay";                                                                                                 
-    pinctrl-0 = <&spi1_default>;                                                                                     
-    pinctrl-names = "default";                                                                                       
-                                                                                                                        
-    gc9a01a: gc9a01a@0 {                                                                                             
-        compatible = "gc9a01a";                                                                                      
-        reg = <0>;                                                                                                   
-        spi-max-frequency = <15000000>;                                                                              
-        spi-cpol = <0>;                                                                                              
-        spi-cpha = <0>;                                                                                              
-        dc-gpios = <&gpio0 16 (GPIO_ACTIVE_HIGH)>;                                                                     
-        rst-gpios = <&gpio0 21 (GPIO_ACTIVE_HIGH)>;                                                                    
-        status = "okay";                                                                                             
-    };                                                                                                               
-};                                                                                                                   
+                                                                                                                 
 &pinctrl {                                                                                                           
     spi1_default: spi1_default {                                                                                     
         sck {
