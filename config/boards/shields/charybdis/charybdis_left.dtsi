@@ -9,5 +9,21 @@
     };                                                                                                               
 };
 
+/ {
+    /* SPI 引脚配置 */
+    spi0_default: spi0_default {
+        sck {
+            nrf-pinctrl-single = <NRF_PSEL(SPI_SCK, 0, 17)>;
+        };
+        mosi {
+…    };
+};
+
+&spi0 {
+    status = "okay";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-names = "default";
+};
+
                                                                                                                  
                                                                                                                
