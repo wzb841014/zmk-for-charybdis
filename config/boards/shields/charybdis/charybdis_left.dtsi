@@ -10,13 +10,4 @@
 };
 
                                                                                                                  
-&pinctrl {                                                                                                           
-    spi1_default: spi1_default {                                                                                     
-        sck {
-            nrf-pinctrl-single = <NRF_PSEL(SPI_SCK, 0, 17)>; /* 保留你的引脚号 */
-        };
-        mosi {
-            nrf-pinctrl-single = <NRF_PSEL(SPI_MOSI, 0, 15)>; /* 保留你的引脚号 */
-        };                                                                                                         
-    };                                                                                                               
-};                                                                                                                  
+                                                                                                               
