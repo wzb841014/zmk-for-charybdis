@@ -24,7 +24,7 @@
 
     /* GC9A01 显示屏定义 */
     gc9a01: gc9a01 {
-        compatible = "sitronix,gc9a01";
+        compatible = "zmk,gc9a01";
         label = "GC9A01";
         spi-dev = <&spi0>;
         reset-gpios = <&gpio0 22 (GPIO_ACTIVE_LOW)>;
