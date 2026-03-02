@@ -9,6 +9,6 @@ manifest:
       remote: zmkfirmware                                                                                            
       revision: feature-test                                                                                         
       import: app/west.yml                                                                                           
-    - name: gc9a01a_zephyr_driver                                                                                    
-      url: https://github.com/amrithvenkat/gc9a01a_zephyr_driver                                                     
-      revision: main                
+    - name: gc9a01a_zephyr_driver
+      url: https://github.com/wzb841014/gc9a01a_zephyr_driver
+      revision: main           
