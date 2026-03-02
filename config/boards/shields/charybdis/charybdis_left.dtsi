@@ -40,8 +40,15 @@
 
 &spi0 {
     status = "okay";
-    pinctrl-0 = <&spi0_default>;
-    pinctrl-names = "default";
+    
+    /* 旧式引脚配置 (必需) */
+    sck-pin = <17>;    /* P0.17 */
+    mosi-pin = <15>;   /* P0.15 */
+    miso-pin = <13>;   /* P0.13 */
+    
+    /* pinctrl 配置 (可选，如果支持) */
+    /* pinctrl-0 = <&spi0_default>; */
+    /* pinctrl-names = "default"; */
 };
 
                                                                                
