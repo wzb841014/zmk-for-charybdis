@@ -5,13 +5,13 @@
     /* SPI 引脚配置 */
     spi0_default: spi0_default {
         sck {
-            nrf-pinctrl-single = <NRF_PSEL(SPI_SCK, 0, 17)>;
+            nrf-pinctrl-single = <17>;
         };
         mosi {
-            nrf-pinctrl-single = <NRF_PSEL(SPI_MOSI, 0, 15)>;
+            nrf-pinctrl-single = <15>;
         };
         miso {
-            nrf-pinctrl-single = <NRF_PSEL(SPI_MISO, 0, 15)>;
+            nrf-pinctrl-single = <13>;
         };
     };
 
